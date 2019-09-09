@@ -26,13 +26,13 @@ public class UserController {
 	@Autowired
 	JavaMailSender javaMailSender;
 
-	@Cacheable(value = "user-all")
+	@Cacheable(value = "user-all", cacheManager = "redisCacheManager")
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public List<User> GetAllUsers() {
 		return userRepository.findAll();
 	}
 
-	@Cacheable(value = "user-single", key="#username")
+	@Cacheable(value = "user-single", key="#username", cacheManager = "redisCacheManager")
 	@RequestMapping(value = "/users/{username}", method = RequestMethod.GET)
 	public User GetUser(@PathVariable("username") String username) {
 		return userRepository.findByUsername(username);
